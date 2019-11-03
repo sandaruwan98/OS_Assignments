@@ -36,8 +36,12 @@ def call(opr):
 	reg['pc']=int(opr[0]);
 
 
+def ret(opr):
+	reg['pc']=memory[reg['sp']]
+	
+
 def out(opr):
-	print reg[opr[0]];
+	print(reg[opr[0]]);
 	reg['pc']=reg['pc']+1;
 
 def push(opr):
@@ -85,5 +89,6 @@ for l in f:
 	
 runm();
 	
-print reg;
-print memory;
+print (reg);
+print(" ")
+print (memory);
