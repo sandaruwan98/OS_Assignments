@@ -4,7 +4,6 @@
 
 char memory[SIZE];
 
-
 struct memoryLL
 {
     int IsFree;
@@ -81,7 +80,8 @@ void MyMalloc(int size){
 
     NN->next=ptr->next;
     NN->prev=ptr;
-    ptr->next->prev=NN;
+    if (ptr->next!=NULL)
+        ptr->next->prev=NN;
     ptr->next=NN;
 
     // return &memory[ptr->startAdr];
