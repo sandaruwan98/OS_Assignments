@@ -91,7 +91,7 @@ void MyMalloc(int size)
 void MyFree(int adr)
 {
     node *ptr = start;
-    while (ptr->startAdr == adr && ptr != NULL)
+    while ((ptr->startAdr != adr) && (ptr != NULL))
         ptr = ptr->next;
     if (ptr == NULL)
     {
@@ -100,6 +100,7 @@ void MyFree(int adr)
     else
     {
         ptr->IsFree = 0;
+
         if (ptr->next != NULL)
         {
             //if Before node is also free we have to merge them
@@ -120,7 +121,7 @@ void MyFree(int adr)
                 free(ptr);
             }
         }
-        else if (ptr->prev != NULL)
+         if (ptr->prev != NULL)
         {
             if (ptr->prev->IsFree == 0)
             {
@@ -128,21 +129,27 @@ void MyFree(int adr)
 
                 ptr->prev->next = ptr->next;
                 if (ptr->next != NULL)
-                    ptr->next->prev = ptr->prev;
+                    ptr->next->prev = ptr->prev; 
+                free(ptr);
             }
-            free(ptr);
+           
         }
         if ((ptr->next != NULL) && (ptr->prev != NULL))
         {
-            node *tmpnext = ptr->next;
+            if ((ptr->next->IsFree == 0) && (ptr->prev->IsFree == 0))
+            {
+                node *tmpnext = ptr->next;
 
-            ptr->prev->endAdr = tmpnext->endAdr;
-            ptr->prev->next = tmpnext->next;
-            if (tmpnext->next != NULL)
-                tmpnext->next->prev = ptr->prev;
+                ptr->prev->endAdr = tmpnext->endAdr;
+                ptr->prev->next = tmpnext->next;
+                if (tmpnext->next != NULL)
+                    tmpnext->next->prev = ptr->prev;
 
-            free(ptr);
-            free(tmpnext);
+                free(ptr);
+                free(tmpnext);
+            }
+            
+           
         }
     }
 }

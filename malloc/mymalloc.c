@@ -10,9 +10,10 @@ int main()
     MyMalloc(50);
     MyMalloc(200);
     MyMalloc(5);
-    // MyFree(67);
-    // MyFree(360);
-    
+    MyFree(100);
+    MyFree(160);
+    MyFree(110);
+    MyMalloc(300);
     PrintLL();
     return 0;
 }
