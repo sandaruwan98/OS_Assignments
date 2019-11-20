@@ -102,13 +102,47 @@ void MyFree(int adr)
         ptr->IsFree = 0;
         if (ptr->next != NULL)
         {
+            //if Before node is also free we have to merge them
             if (ptr->next->IsFree == 0)
             {
                 ptr->next->startAdr = ptr->startAdr;
+                if (ptr == start)
+                {
+                    ptr->next->prev = NULL;
+                    start = ptr->next;
+                }
+                else
+                {
+                    ptr->next->prev = ptr->prev;
+                    ptr->prev->next = ptr->next;
+                }
 
-                ptr->next->prev = ptr->prev;
-                ptr->prev->next = ptr->next;
+                free(ptr);
             }
+        }
+        else if (ptr->prev != NULL)
+        {
+            if (ptr->prev->IsFree == 0)
+            {
+                ptr->prev->endAdr = ptr->endAdr;
+
+                ptr->prev->next = ptr->next;
+                if (ptr->next != NULL)
+                    ptr->next->prev = ptr->prev;
+            }
+            free(ptr);
+        }
+        if ((ptr->next != NULL) && (ptr->prev != NULL))
+        {
+            node *tmpnext = ptr->next;
+
+            ptr->prev->endAdr = tmpnext->endAdr;
+            ptr->prev->next = tmpnext->next;
+            if (tmpnext->next != NULL)
+                tmpnext->next->prev = ptr->prev;
+
+            free(ptr);
+            free(tmpnext);
         }
     }
 }
