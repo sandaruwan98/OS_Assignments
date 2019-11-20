@@ -4,8 +4,13 @@
 
 int main()
 {
-    InsertNode(0, 0, SIZE - 1);
-    
+    InsertNodeEnd(0, 0, SIZE - 1);
+    MyMalloc(100);
+    MyMalloc(10);
+    MyMalloc(50);
+    MyMalloc(200);
+    MyMalloc(5);
+
     PrintLL();
     return 0;
 }

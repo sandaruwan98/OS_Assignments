@@ -19,14 +19,21 @@ typedef struct memoryLL node;
 
 node* start = NULL;;
 
-void InsertNode(int freeOrAlloc, int stradr, int endAdr)
-{
+node* NewNode(int freeOrAlloc, int stradr, int endAdr){
     node *newnode = (node *)malloc(sizeof(node));
     newnode->prev = NULL;
     newnode->next = NULL;
     newnode->IsFree = freeOrAlloc;
     newnode->startAdr = stradr;
     newnode->endAdr = endAdr;
+    return newnode;
+}
+
+
+void InsertNodeEnd(int freeOrAlloc, int stradr, int endAdr)
+{
+
+    node *newnode = NewNode(freeOrAlloc,stradr,endAdr);
     if (start==NULL)
     {
         start=newnode;
@@ -51,19 +58,33 @@ void PrintLL(){
 }
 
 void FindFreeSpace(int size){
+   
+
+}
+
+void MyMalloc(int size){
+     //find free partition
     node* ptr = start;
     while (ptr!=NULL)
     {
-        int x = ptr->endAdr-ptr->startAdr;
+        int x = ptr->endAdr-ptr->startAdr +1;
         if (ptr->IsFree == 0 && size <= x)
             break;
         ptr=ptr->next;
     }
-    
-}
+    //allocate memory(change linked list )
+    ptr->IsFree=1;
+    int end = ptr->endAdr;
+    int y = ptr->startAdr+size-1;
+    ptr->endAdr=y;
+    node* NN = NewNode(0,y+1,end);
 
-char* MyMalloc(int size){
-    return &memory[0];
+    NN->next=ptr->next;
+    NN->prev=ptr;
+    ptr->next->prev=NN;
+    ptr->next=NN;
+
+    // return &memory[ptr->startAdr];
 }
 
 void MyFree(){
