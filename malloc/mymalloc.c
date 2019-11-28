@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include "mymalloc.h"
 
-void MyMalloc(int size)
+
+char* MyMalloc(size_t size)
 {
     //find free partition
     node *ptr = start;
@@ -26,7 +27,8 @@ void MyMalloc(int size)
         ptr->next->prev = NN;
     ptr->next = NN;
 
-    // return &memory[ptr->startAdr];
+    return (&memory[ptr->startAdr]);
+    // return ptr->startAdr;
 }
 
 void MyFree(int adr)
@@ -83,7 +85,6 @@ void MyFree(int adr)
                 ptr->prev->next = tmpnext->next;
                 if (tmpnext->next != NULL)
                     tmpnext->next->prev = ptr->prev;
-
                 free(ptr);
                 free(tmpnext);
             }
@@ -92,19 +93,33 @@ void MyFree(int adr)
 }
 
 
-
 int main()
 {
     InsertNodeEnd(0, 0, SIZE - 1);
-    MyMalloc(100);
-    MyMalloc(10);
+    // printf("%p\n" ,MyMalloc(100));
+    // printf("%p\n" ,MyMalloc(10));
+    // printf("%p\n" ,MyMalloc(50));
+    // printf("%p\n" ,MyMalloc(200));
+    
+    // MyMalloc(10);
+    // MyMalloc(50);
+    // MyMalloc(200);
+    // MyMalloc(5);
+    // MyFree(100);
+    // MyFree(160);
+    // MyFree(160);
+    // MyMalloc(300);
+     MyMalloc(10);
     MyMalloc(50);
     MyMalloc(200);
-    MyMalloc(5);
-    MyFree(100);
-    MyFree(160);
-    MyFree(110);
-    MyMalloc(300);
+    // MyMalloc(5);
+    MyFree(10);
+    // MyFree(60);
+
     PrintLL();
+
+    
+    
+    
     return 0;
 }

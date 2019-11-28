@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stddef.h>
 #define SIZE 25000
 
 char memory[SIZE];

@@ -43,13 +43,13 @@
 33 store 72 acc
 34 movv a 70
 35 add a acc
-36 
+36 loadr sp acc
 37 pop acc
 38 pop d
 39 pop c
 40 pop b
 41 pop a
-42 movv ivec
+42 movv ivec 20
 43 movv timer 5
 44 movv int 1
 45 ret

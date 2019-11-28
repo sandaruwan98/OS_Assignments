@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.asm": "asm-collection",
+        "*.cpp": "cpp",
+        "nodetypequeuechar.h": "c",
+        "stdio.h": "c"
+    }
+}
