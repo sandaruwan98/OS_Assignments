@@ -2,6 +2,63 @@
 #include <stdlib.h>
 #include "mymalloc.h"
 
+
+node *start = NULL;
+
+void CreateStart(){
+    node *tmp = (void*)memory;
+    start = (void*)((void*)tmp+(SIZE-SIZE_FOR_LL));
+    start->IsFree=0;
+    start->startAdr=0;
+    start->endAdr=SIZE-SIZE_FOR_LL;
+    start->next=NULL;
+    start->prev=NULL;
+}
+
+
+
+
+node *NewNode(int freeOrAlloc, int stradr, int endAdr)
+{
+	node *ptr=start;
+    int st= SIZE-SIZE_FOR_LL;
+    int offset = 0;
+    while (ptr<(start+SIZE_FOR_LL))
+    {
+        if ((ptr->startAdr==0) && (ptr->endAdr==0))
+            break;
+            
+        offset+=(sizeof(node));
+        ptr++;
+    }
+    
+    
+    
+    node *newnode = (void*)( (void*)start+offset);
+    newnode->prev = NULL;
+    newnode->next = NULL;
+    newnode->IsFree = freeOrAlloc;
+    newnode->startAdr = stradr;
+    newnode->endAdr = endAdr;
+    return newnode;
+}
+void PrintList()
+{
+    node *ptr = start;
+
+    while (ptr != NULL)
+    {
+        printf("IsFree = %d \t start = %d \t end = %d\n", ptr->IsFree, ptr->startAdr, ptr->endAdr);
+        ptr = ptr->next;
+    }
+}
+
+
+
+
+
+
+
 void *MyMalloc(size_t size)
 {
 
@@ -109,6 +166,9 @@ void MyFree(void* p)
         
     }
 }
+
+
+
 
 // void pp(node *start)
 // {
