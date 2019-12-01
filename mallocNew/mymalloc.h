@@ -18,6 +18,12 @@ struct memoryLL
 
 typedef struct memoryLL node;
 
+void *MyMalloc(size_t size);
+void MyFree(void* p);
+void freeLL(node *ptr);
+
+
+
 
 node *start = NULL;
 

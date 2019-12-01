@@ -3,6 +3,7 @@
         "*.asm": "asm-collection",
         "*.cpp": "cpp",
         "nodetypequeuechar.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "mymalloc.h": "c"
     }
 }

@@ -2,16 +2,13 @@
 #include <stdlib.h>
 #include "mymalloc.h"
 
-char *MyMalloc(size_t size)
+void *MyMalloc(size_t size)
 {
 
     if (start == NULL)
     {
         CreateStart();
     }
-    
-    
-
         //find free partition
         node *ptr = start;
         while (ptr != NULL)
@@ -34,7 +31,7 @@ char *MyMalloc(size_t size)
             ptr->next->prev = NN;
         ptr->next = NN;
     
-    // return (&memory[ptr->startAdr]);
+    return (void*)(memory[ptr->startAdr]);
     return 0;
 }
 
@@ -47,11 +44,14 @@ void freeLL(node *ptr){
 }
 
 
-void MyFree(int adr)
+void MyFree(void* p)
 {
-    node *ptr = start;
-    while ((ptr->startAdr != adr) && (ptr != NULL))
-        ptr = ptr->next;
+
+    node *ptr ;
+     if(((void*)memory<=p)&&(p<=(void*)(memory+(SIZE-SIZE_FOR_LL)))){
+         ptr = (void*)p;
+     }
+
     if (ptr == NULL)
     {
         printf("Invalid Argument or Given address not allocated");
@@ -115,47 +115,50 @@ void MyFree(int adr)
 
 //     printf("%d %d %d\n", start->IsFree, start->startAdr, start->endAdr);
 // }
-int main()
-{
-    // InsertNodeEnd(0, 0, SIZE - 1);
-    // printf("%p\n" ,MyMalloc(100));
-    // printf("%p\n" ,MyMalloc(10));
-    // printf("%p\n" ,MyMalloc(50));
-    // printf("%p\n" ,MyMalloc(200));
 
-    MyMalloc(10);
-    MyMalloc(50);
-    MyMalloc(200);
-    // MyMalloc(5);
-    // MyFree(10);
-    MyFree(0);
-    MyFree(10);
-    MyFree(60);
-    // MyMalloc(300);
-    // PrintLL();
+// int main()
+// {
+//     // InsertNodeEnd(0, 0, SIZE - 1);
+//     // printf("%p\n" ,MyMalloc(100));
+//     // printf("%p\n" ,MyMalloc(10));
+//     // printf("%p\n" ,MyMalloc(50));
+//     // printf("%p\n" ,MyMalloc(200));
 
-    // printf("%c", memory[0]);
-    // printf("%p\n", &memory[1]);
-    // printf("%p\n", &memory[2]);
-    // printf("%p\n", &memory[3]);
-    // printf("%p\n", &memory[4]);
-    // printf("%p\n", &memory[5]);
-    // printf("%p\n", &memory[6]);
-    // printf("%p\n", &memory[SIZE]);
-    // printf("%s\n", &memory[24500]);
+//     int *p = (int*) MyMalloc(10);
+//     int *q = (int*)MyMalloc(50);
+//     int *r = (int*)MyMalloc(200);
+//     // MyMalloc(5);
+//     // MyFree(10);
 
-    // CreateStart();
+
+//     // MyFree(p);
+//     MyFree(q);
+//     // MyFree(r);
+//     // MyMalloc(300);
+//     PrintList();
+
+//     // printf("%c", memory[0]);
+//     //printf("%p\n", p);
+// //    printf("%p\n", );
+//     // printf("%p\n", &memory[3]);
+//     // printf("%p\n", &memory[4]);
+//     // printf("%p\n", &memory[5]);
+//     // printf("%p\n", &memory[6]);
+//     // printf("%p\n", &memory[SIZE]);
+//     // printf("%s\n", &memory[24500]);
+
+//     // CreateStart();
     
-    // char *p = memory;
-    // node *v = NewNode(1, 309, 400);
-    // printf("%p\n", *(&memory[24500]));
-    // printf("%p\n", &memory[24532]);
-    // printf("%d\n", memory[24520]);
-    // printf("%s\n", memory[24564]);
-    // printf("%s\n", memory[24565]);
-    // memory[24508] = 4;
-    // printf("%c\n", (p));
-    PrintLL();
+//     // char *p = memory;
+//     // node *v = NgvfdsaewNode(1, 309, 400);
+//     // printf("%p\n", *(&memory[24500]));
+//     // printf("%p\n", &memory[24532]);
+//     // printf("%d\n", memory[24520]);
+//     // printf("%s\n", memory[24564]);
+//     // printf("%s\n", memory[24565]);
+//     // memory[24508] = 4;
+//     // printf("%c\n", (p));
+//     // PrintLL();
 
-    return 0;
-}
+//     return 0;
+// }
