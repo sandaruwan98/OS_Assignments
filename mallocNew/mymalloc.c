@@ -1,5 +1,5 @@
 
-#include <stdlib.h>
+// #include <stdlib.h>
 #include "mymalloc.h"
 
 
@@ -104,7 +104,7 @@ void freeLL(node *ptr){
 void MyFree(void* p)
 {
 
-    node *ptr ;
+    node *ptr;
      if(((void*)memory<=p)&&(p<=(void*)(memory+(SIZE-SIZE_FOR_LL)))){
          ptr = (void*)p;
      }
