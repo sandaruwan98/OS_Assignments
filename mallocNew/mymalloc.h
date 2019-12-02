@@ -4,7 +4,7 @@
 #define SIZE 25000
 #define SIZE_FOR_LL 500
 
-extern char memory[SIZE];
+char memory[SIZE];
 
 struct memoryLL
 {
@@ -18,12 +18,12 @@ struct memoryLL
 
 typedef struct memoryLL node;
 
-void CreateStart();
-node *NewNode(int , int , int );
-void PrintList();
-void *MyMalloc(size_t size);
-void freeLL(node *ptr);
-void MyFree(void* p);
+ void CreateStart();
+ node *NewNode(int , int , int );
+ void PrintList();
+ void *MyMalloc(size_t size);
+ void freeLL(node *ptr);
+ void MyFree(void* p);
 
 
 
