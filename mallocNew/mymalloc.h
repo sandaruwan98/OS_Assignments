@@ -4,7 +4,7 @@
 #define SIZE 25000
 #define SIZE_FOR_LL 500
 
- char memory[SIZE];
+extern char memory[SIZE];
 
 struct memoryLL
 {
