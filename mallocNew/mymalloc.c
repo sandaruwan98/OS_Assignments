@@ -2,39 +2,34 @@
 // #include <stdlib.h>
 #include "mymalloc.h"
 
-
 node *start = NULL;
 
-void CreateStart(){
-    node *tmp = (void*)memory;
-    start = (void*)((void*)tmp+(SIZE-SIZE_FOR_LL));
-    start->IsFree=0;
-    start->startAdr=0;
-    start->endAdr=SIZE-SIZE_FOR_LL;
-    start->next=NULL;
-    start->prev=NULL;
+void CreateStart()
+{
+    node *tmp = (void *)memory;
+    start = (void *)((void *)tmp + (SIZE - SIZE_FOR_LL));
+    start->IsFree = 0;
+    start->startAdr = 0;
+    start->endAdr = SIZE - SIZE_FOR_LL;
+    start->next = NULL;
+    start->prev = NULL;
 }
-
-
-
 
 node *NewNode(int freeOrAlloc, int stradr, int endAdr)
 {
-	node *ptr=start;
-    int st= SIZE-SIZE_FOR_LL;
+    node *ptr = start;
+    int st = SIZE - SIZE_FOR_LL;
     int offset = 0;
-    while (ptr<(start+SIZE_FOR_LL))
+    while (ptr < (start + SIZE_FOR_LL))
     {
-        if ((ptr->startAdr==0) && (ptr->endAdr==0))
+        if ((ptr->startAdr == 0) && (ptr->endAdr == 0))
             break;
-            
-        offset+=(sizeof(node));
+
+        offset += (sizeof(node));
         ptr++;
     }
-    
-    
-    
-    node *newnode = (void*)( (void*)start+offset);
+
+    node *newnode = (void *)((void *)start + offset);
     newnode->prev = NULL;
     newnode->next = NULL;
     newnode->IsFree = freeOrAlloc;
@@ -53,12 +48,6 @@ void PrintList()
     }
 }
 
-
-
-
-
-
-
 void *MyMalloc(size_t size)
 {
 
@@ -66,16 +55,30 @@ void *MyMalloc(size_t size)
     {
         CreateStart();
     }
-        //find free partition
-        node *ptr = start;
-        while (ptr != NULL)
-        {
-            size_t x = ptr->endAdr - ptr->startAdr + 1;
-            if (ptr->IsFree == 0 && size <= x)
-                break;
-            ptr = ptr->next;
-        }
-        //allocate memory(change linked list )
+    //find free partition
+    size_t node_size;
+    node *ptr = start;
+    while (ptr!= NULL)
+    {
+        node_size = ptr->endAdr - ptr->startAdr + 1;
+        if (ptr->IsFree == 0 && size <= node_size)
+            break;
+        ptr = ptr->next;
+    }
+    
+    //allocate memory(change linked list )
+    if (ptr==NULL)
+    {
+        printf("No enough space to allocate\n");
+        return NULL;
+    }
+    
+    if (node_size == size)
+    {
+        ptr->IsFree = 1;
+    }
+    else
+    {
         ptr->IsFree = 1;
         int end = ptr->endAdr;
         int y = ptr->startAdr + size - 1;
@@ -87,31 +90,40 @@ void *MyMalloc(size_t size)
         if (ptr->next != NULL)
             ptr->next->prev = NN;
         ptr->next = NN;
-    
-    return (void*)(memory[ptr->startAdr]);
+    }
+
+    return (void *)(&memory[ptr->startAdr]);
     return 0;
 }
 
-void freeLL(node *ptr){
-    ptr->endAdr=0;
-    ptr->startAdr=0;
-    ptr->next=NULL;
-    ptr->prev=NULL;
-
+void freeLL(node *ptr)
+{
+    ptr->endAdr = 0;
+    ptr->startAdr = 0;
+    ptr->next = NULL;
+    ptr->prev = NULL;
 }
 
-
-void MyFree(void* p)
+void MyFree(void *p)
 {
+    int adr;
+    if (((void *)memory <= p) && (p <= (void *)(memory + (SIZE - SIZE_FOR_LL))))
+    {
+        adr = (int)(p - (void *)memory);
+    }
+    else
+    {
+        printf("Invalid  address given to free\n");
+        return;
+    }
 
-    node *ptr;
-     if(((void*)memory<=p)&&(p<=(void*)(memory+(SIZE-SIZE_FOR_LL)))){
-         ptr = (void*)p;
-     }
+    node *ptr = start;
+    while ((ptr->startAdr != adr) && (ptr != NULL))
+        ptr = ptr->next;
 
     if (ptr == NULL)
     {
-        printf("Invalid Argument or Given address not allocated");
+        printf("Invalid Argument or Given address not allocated\n");
     }
     else
     {
@@ -163,11 +175,8 @@ void MyFree(void* p)
                 freeLL(ptr);
             }
         }
-        
     }
 }
-
-
 
 
 // void pp(node *start)
@@ -190,7 +199,6 @@ void MyFree(void* p)
 //     // MyMalloc(5);
 //     // MyFree(10);
 
-
 //     // MyFree(p);
 //     MyFree(q);
 //     // MyFree(r);
@@ -208,7 +216,7 @@ void MyFree(void* p)
 //     // printf("%s\n", &memory[24500]);
 
 //     // CreateStart();
-    
+
 //     // char *p = memory;
 //     // node *v = NgvfdsaewNode(1, 309, 400);
 //     // printf("%p\n", *(&memory[24500]));
