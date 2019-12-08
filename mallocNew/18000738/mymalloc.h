@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stddef.h>
 #define SIZE 25000
-#define SIZE_FOR_LL 1500
+#define SIZE_FOR_LL 2000
 
 char memory[SIZE];
 

@@ -4,12 +4,12 @@
 int main()
 {
     if (fork())
-        printf("PARENT");
+        printf("PARENT\n");
     else
         if(fork())
-            printf("CHILD 1");
+            printf("CHILD 1\n");
         else
-            printf("CHILD 2");
+            printf("CHILD 2\n");
         
         
     
